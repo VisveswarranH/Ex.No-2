@@ -1,4 +1,5 @@
 # Ex-2-GENERATION OF LEXICAL TOKENS LEX FLEX TOOL
+# Register Number: 212224110063
 # DATE: 09/09/2025
 # AIM
 ## To write a lex program to implement lexical analyzer to recognize a few patterns.
@@ -91,7 +92,7 @@ int main()
 }
 ```
 # OUTPUT:
-![377374996-ccfee339-5608-4a1c-9728-f35454dc432a](https://github.com/user-attachments/assets/29cd6d97-a0ba-4cee-b0a7-88ab9451c948)
+<img width="786" height="269" alt="image" src="https://github.com/user-attachments/assets/c96073fe-84f9-47d7-8453-1dab6560d947" />
 
 
 
