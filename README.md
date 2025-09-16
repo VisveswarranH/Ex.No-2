@@ -1,7 +1,7 @@
 # Ex.No :2
 # GENERATION OF LEXICAL TOKENS USING LEX/FLEX TOOL
-## Register Number:
-## Date:
+## Register Number: 212224110063
+## Date: 09/09/2025
 ## AIM
  To write a lex program to implement lexical analyzer to recognize a few patterns.
 ## ALGORITHM
@@ -35,8 +35,63 @@
 7.	Compile that file with C compiler and verify the output.
 
 ## PROGRAM:
+```l
+%{
+#include <stdio.h>
+#include <stdlib.h>
+
+int COMMENT = 0;
+%}
+
+identifier [a-zA-Z_][a-zA-Z0-9_]*
+
+%%
+#.*                       { if (!COMMENT) printf("\n%s is a PREPROCESSOR DIRECTIVE", yytext); }
+int|float|char|double|while|for|do|if|break|continue|void|switch|case|long|struct|const|typedef|return|else|goto { if (!COMMENT) printf("\n\t%s is a KEYWORD", yytext); }
+"/*"                     { COMMENT = 1; }
+"*/"                     { COMMENT = 0; }
+{identifier}\(           { if (!COMMENT) printf("\n\t%s is a FUNCTION", yytext); }
+\{                       { if (!COMMENT) printf("\n\tBLOCK BEGINS"); }
+\}                       { if (!COMMENT) printf("\n\tBLOCK ENDS"); }
+{identifier}(\[[0-9]*\])? { if (!COMMENT) printf("\n\t%s is an IDENTIFIER", yytext); }
+\"[^\"\\](\\.[^\"\\])*\" { if (!COMMENT) printf("\n\t%s is a STRING", yytext); }
+[0-9]+                   { if (!COMMENT) printf("\n\t%s is a NUMBER", yytext); }
+=                        { if (!COMMENT) printf("\n\t%s is an ASSIGNMENT OPERATOR", yytext); }
+\<=|\>=|\<|==|\>        { if (!COMMENT) printf("\n\t%s is a RELATIONAL OPERATOR", yytext); }
+[\+\-\*/]               { if (!COMMENT) printf("\n\t%s is an ARITHMETIC OPERATOR", yytext); }
+[(),;]                   { if (!COMMENT) printf("\n\t%s is a PUNCTUATION", yytext); } /* Handle parentheses, comma, semicolon */
+[ \t\n]+                 { /* Ignore whitespace and newlines */ }
+.                        { if (!COMMENT) printf("\n\tUNKNOWN CHARACTER: %s", yytext); } /* Catch-all for single unrecognized characters */
+%%
+
+int main(int argc, char **argv) { 
+    if (argc > 1) {
+        FILE *file = fopen(argv[1], "r"); 
+        if (!file) {
+            printf("Could not open %s \n", argv[1]); 
+            exit(1);
+        }
+        yyin = file;
+    }
+    yylex(); 
+    printf("\n\n"); 
+    return 0;
+}
+
+int yywrap() { return 1; }
+```
 
 ## INPUT:
+```c
+#include <stdio.h>
+int main(){
+    int a,b;
+    return 0;
+}
+```
+
 ## OUTPUT:
+<img width="984" height="318" alt="image" src="https://github.com/user-attachments/assets/9d1ef25f-a53d-4731-814f-3536ab2b3c68" />
+
 ## RESULT:
  The lexical analyzer is implemented using lex and the output is verified.
